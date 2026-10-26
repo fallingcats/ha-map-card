@@ -195,7 +195,8 @@ export default class MapCard extends LitElement {
     L.Icon.Default.imagePath = "/static/images/leaflet/images/";
 
     const mapEl = this.shadowRoot.querySelector('#map');
-    let map = L.map(mapEl, this._config.mapOptions);
+    // Draw overlays well beyond the view, otherwise they show cut off while zooming out
+    let map = L.map(mapEl, { renderer: L.svg({ padding: 0.5 }), ...this._config.mapOptions });
 
     // Add dark class if darkmode
     this._isDarkMode() ? mapEl.classList.add('dark') : mapEl.classList.add('light');
